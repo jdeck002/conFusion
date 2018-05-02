@@ -110,11 +110,11 @@ angular.module('confusionApp')
 
             var leaders = corporateFactory.getLeaders();
 
-            //var leader = corporateFactory.getLeaer(0);
+            var leader = corporateFactory.getLeader(3);
 
             $scope.leaders = leaders; 
 
-            //$scope.leader=leader;
+            $scope.leader=leader;
 
         }])
         // implement the IndexController and About Controller here

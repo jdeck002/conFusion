@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <div class="row row-content">
+        <div class="row row-content" ng-controller="AboutController">
             <div class="col-xs-12 col-sm-3 col-sm-push-9">
                 <p style="padding:20px;"></p>
                 <h3 align=center>Meet our Culinary Specialists</h3>
@@ -56,7 +56,7 @@
             <div class="col-xs-12 col-sm-9 col-sm-pull-3">
                 <div class="media">
                     <div class="media-left media-middle">
-                        <a ui-sref="app.aboutus({id: leader._id})">
+                        <a ui-sref="app.aboutus()">
                         <img class="media-object img-thumbnail"
                          ng-src={{leader.image}} alt={{leader.name}}>
                         </a>
@@ -67,8 +67,7 @@
                         <p>{{leader.description}}</p>
                     </div>
                     <br>
-                  </div>
-				<h4>Implement the Executive Chef Info Here</h4>
-            </div>
+                </div>
+			</div>
         </div>
   </div>
