@@ -16,7 +16,7 @@ var gulp = require('gulp'),
     ngannotate = require('gulp-ng-annotate');
 
 gulp.task('jshint', function() {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src('./app/scripts/**/*.js')
   .pipe(jshint())
   .pipe(jshint.reporter(stylish));
 });
@@ -32,17 +32,18 @@ gulp.task('default', ['clean'], function() {
 });
 
 gulp.task('usemin',['jshint'], function () {
-  return gulp.src('./app/index.html')
+  return gulp.src('./app/**/*.html')
       .pipe(usemin({
-        css:[minifycss(),rev()],
-        js: [uglify(),rev()]
+        css:[ minifycss, rev ],
+        js: [ ngannotate, uglify, rev ],
+        skipMissingResources : true
       }))
       .pipe(gulp.dest('dist/'));
 });
 
 // Images
 gulp.task('imagemin', function() {
-  return del(['dist/images']), gulp.src('app/images/**/*')
+  return del(['./dist/images']), gulp.src('./app/images/**/*')
     .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
     .pipe(gulp.dest('dist/images'))
     .pipe(notify({ message: 'Images task complete' }));
@@ -58,9 +59,9 @@ gulp.task('copyfonts', ['clean'], function() {
 // Watch
 gulp.task('watch', ['browser-sync'], function() {
   // Watch .js files
-  gulp.watch('{app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
+  gulp.watch('{./app/scripts/**/*.js,app/styles/**/*.css,app/**/*.html}', ['usemin']);
       // Watch image files
-  gulp.watch('app/images/**/*', ['imagemin']);
+  gulp.watch('./app/images/**/*', ['imagemin']);
 
 });
 
@@ -79,16 +80,6 @@ gulp.task('browser-sync', ['default'], function () {
          index: "index.html"
       }
    });
-    // Watch any files in dist/, reload on change
-  gulp.watch(['dist/**']).on('change', browserSync.reload);
-});
-
-gulp.task('usemin',['jshint'], function () {
-  return gulp.src('./app/index.html')
-    .pipe(usemin({
-      css:[minifycss(),rev()],
-      js: [ngannotate(),uglify(),rev()]
-    }))
-    
-    .pipe(gulp.dest('dist/'));
+        // Watch any files in dist/, reload on change
+gulp.watch(['dist/**']).on('change', browserSync.reload);
 });
